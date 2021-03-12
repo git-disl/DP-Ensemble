@@ -1,4 +1,4 @@
-# **D**iversity O**P**timized **Ensemble** (DP-Ensemble) 
+# DP-Ensemble: Diversity Optimized Ensemble
 -----------------
 [![GitHub license](https://img.shields.io/badge/license-apache-green.svg?style=flat)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Version](https://img.shields.io/badge/version-0.0.1-red.svg?style=flat)]()
@@ -9,6 +9,8 @@
 --->
 
 ## Introduction
+
+DP-Ensemble is short for **D**iversity o**P**timized **Ensemble**, which is built on top of [EnsembleBench](https://github.com/git-disl/EnsembleBench). By leveraging FQ-diversity metrics, DP-Ensemble can effectively identify high diversity ensembles with high performance. 
 
 FQ-diversity metrics are designed based on the following three optimizations:
 1. separately measure and compare the ensemble teams of equal size.
