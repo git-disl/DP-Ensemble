@@ -19,7 +19,9 @@ FQ-diversity metrics are designed based on the following three optimizations:
 
 These optimizations enable FQ-diversity metrics to more accurately capture the failure independence among the member models of ensemble teams, and efficiently select high quality ensemble teams. Furthermore, the quality of selected ensemble teams can be improved by introducing EQ diversity metrics to combine the top performing FQ metrics.
 
-Our paper has been accepted by CVPR 2021. If you find this work useful in your research, please cite the following paper:
+CVPR 2021 Presentation Video: https://youtu.be/jmHTCE3mrR4
+
+If you find this work useful in your research, please cite the following paper:
 
 **Bibtex**:
 ```bibtex
