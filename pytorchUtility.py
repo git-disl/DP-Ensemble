@@ -24,6 +24,12 @@ def calAccuracy(output, target, topk=(1,)):
         res.append(correct_k.mul_(100.0 / batch_size))
     return res
 
+def calAveragePredictionVectorAccuracy(predictionVectorsList, target, modelsList=None, topk=(1,)):
+    predictionVectorsStack = torch.stack(predictionVectorsList)
+    if len(modelsList) > 0:
+        predictionVectorsStack = predictionVectorsStack[modelsList,...]
+    averagePrediction = torch.mean(predictionVectorsStack, dim=0)
+    return calAccuracy(averagePrediction, target, topk)
 
 def calNegativeSamplesSet(predictionVectorsList, target):
     """filter the disagreed samples, return an array of sets"""
