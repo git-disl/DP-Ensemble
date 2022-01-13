@@ -1,5 +1,6 @@
 import os
 import time
+from builtins import range
 
 import torch
 import torch.nn as nn
@@ -42,7 +43,7 @@ def calNegativeSamplesSet(predictionVectorsList, target):
         predictionList.append(pred)
         negativeSamplesSet.append(set())
         
-    for i in xrange(batchSize):
+    for i in range(batchSize):
         for j,_ in enumerate(predictionList):
             if predictionList[j][i] != target[i]:
                 negativeSamplesSet[j].add(i)
@@ -64,7 +65,7 @@ def calDisagreementSamplesOneTargetNegative(predictionVectorsList, target, oneTa
     predictions = list()
     predVectors = list()
     
-    for i in xrange(batchSize):
+    for i in range(batchSize):
         pred = []
         predVect = []
         for j, p in enumerate(predictionList):

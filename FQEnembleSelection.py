@@ -20,9 +20,14 @@ from pytorchUtility import *
 import numpy as np
 
 predictionDir = './cifar10/prediction'
+# cifar-10
 models = ['densenet-L190-k40', 'densenetbc-100-12', 'resnext8x64d', 'wrn-28-10-drop', 'vgg19_bn', 
           'resnet20', 'resnet32', 'resnet44', 'resnet56', 'resnet110']
+## imagenet
+#models = ['AlexNet', 'DenseNet', 'EfficientNetb0', 'ResNeXt50', 'Inception3', 'ResNet152', 'ResNet18', 'SqueezeNet', 'VGG16', 'VGG19bn']
 suffix = '.pt'
+
+diversityMetricsList = ['CK', 'QS', 'BD', 'FK', 'KW', 'GD']
 
 labelVectorsList = list()
 predictionVectorsList = list()
@@ -34,7 +39,7 @@ for m in models:
     predictionVectorsList.append(nn.functional.softmax(predictionVectors, dim=-1).cpu())
     labelVectors = prediction['labelVectors']
     labelVectorsList.append(labelVectors.cpu())
-    tmpAccList.append(calAccuracy(predictionVectors, labelVectors))
+    tmpAccList.append(calAccuracy(predictionVectors, labelVectors)[0].cpu())
     print(tmpAccList[-1])
 
 
@@ -90,7 +95,6 @@ crossValidationTimes = 3
 
 teamDiversityMetricMap = dict()
 negAccuracyDict = dict()
-diversityMetricsList = ['CK', 'QS', 'BD', 'FK', 'KW', 'GD']
 startTime = timeit.default_timer()
 for oneTargetModel in range(len(models)):
     sampleID, sampleTarget, predictions, predVectors = calDisagreementSamplesOneTargetNegative(trainPredictionVectorsList, trainLabelVectorsList[0], oneTargetModel)
@@ -169,7 +173,7 @@ for oneTargetModel in range(len(models)):
         thresholds = list()
         kmeans = list()
         teamList = fixedTeamDict['TeamList']
-        accuracyList = [np.mean(negAccuracyDict[teamName].values()) for teamName in teamList]
+        accuracyList = [np.mean(list(negAccuracyDict[teamName].values())) for teamName in teamList]
         diversityMatrix = fixedTeamDict['DiversityMatrix']
         #print(diversityMatrix[:, 0].shape)
         for i in range(len(diversityMetricsList)):
@@ -218,7 +222,7 @@ for j, dm in enumerate(diversityMetricsList):
                     continue
                 tmpMetricList = list()
                 teamModelIdx = map(int, [modelName for modelName in teamName])
-                teamModelAcc = [tmpAccList[modelIdx][0].cpu().item() for modelIdx in teamModelIdx]
+                teamModelAcc = [tmpAccList[modelIdx].item() for modelIdx in teamModelIdx]
                 teamModelWeights = np.argsort(teamModelAcc)
                 #print(teamModelIdx, teamModelWeights)
                 tmpModelWeights = list()
@@ -230,7 +234,7 @@ for j, dm in enumerate(diversityMetricsList):
                             tmpModelWeights.append(teamModelWeights[k])
                 tmpTeamDict[teamName] = np.average(tmpMetricList, weights=tmpModelWeights)
         if len(tmpTeamDict) > 0:
-            accuracyList = np.array([np.mean(negAccuracyDict[teamName].values()) for teamName in tmpTeamDict])
+            accuracyList = np.array([np.mean(list(negAccuracyDict[teamName].values())) for teamName in tmpTeamDict])
             metricList = np.array([tmpTeamDict[teamName] for teamName in tmpTeamDict])
             tmpThreshold, _ = getThresholdClusteringKMeansCenter(accuracyList, metricList, kmeansInit='strategic')
             for teamName in tmpTeamDict:
