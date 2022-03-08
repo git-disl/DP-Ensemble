@@ -25,12 +25,15 @@ If you find this work useful in your research, please cite the following paper:
 
 **Bibtex**:
 ```bibtex
-@InProceedings{dp-ensemble,
-author = {{Wu}, Yanzhao and {Liu}, Ling and {Xie}, Zhongwei and {Chow}, Ka-Ho and {Wei}, Wenqi},
-title = {Boosting Ensemble Accuracy by Revisiting Ensemble Diversity Metrics},
-booktitle = {IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
-month = {June},
-year = {2021}
+@INPROCEEDINGS{dp-ensemble,
+    author={Wu, Yanzhao and Liu, Ling and Xie, Zhongwei and Chow, Ka-Ho and Wei, Wenqi},
+    booktitle={2021 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}, 
+    title={Boosting Ensemble Accuracy by Revisiting Ensemble Diversity Metrics}, 
+    year={2021},
+    volume={},
+    number={},
+    pages={16464-16472},
+    doi={10.1109/CVPR46437.2021.01620}
 }
 ```
 
@@ -43,6 +46,8 @@ Following the steps below for using our FQ metrics for selecting high quality en
 3. Execute the FQEnsembleSelection.py file to obtain the results.
 
 Please refer to our paper and supplementary for detailed results.
+
+You can check a simplified version for the focal diversity based ensemble selection here: https://github.com/git-disl/EnsembleBench/blob/main/demo/FocalDiversityBasedEnsembleSelection.ipynb
 
 ## Problem
 
